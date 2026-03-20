@@ -62,7 +62,7 @@ export function useBridge() {
           address: BRIDGE_CONTRACT as `0x${string}`,
           abi: BRIDGE_ABI,
           functionName: "Deposit",
-          args: [ amountWei, receiver],
+          args: [amountWei, receiver],
         })
         await publicClient.waitForTransactionReceipt({ hash: depositTxHash, confirmations: 1 })
 
