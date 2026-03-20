@@ -57,7 +57,6 @@ export function useBridge() {
           args: [BRIDGE_CONTRACT as `0x${string}`, amountWei],
         })
         await publicClient.waitForTransactionReceipt({ hash: approveTxHash, confirmations: 1 })
-        // 2. Депозит — только после подтверждения апрува
         setStatus("depositing")
         const depositTxHash = await deposit({
           address: BRIDGE_CONTRACT as `0x${string}`,
