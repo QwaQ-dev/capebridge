@@ -1,0 +1,18 @@
+---
+id: 0
+name: Testnet deployment
+network: testnet
+stacks-node: "https://stacks-node-api.testnet.stacks.co"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: capebridge-test-v1
+            expected-sender: ST28108PYB0RP98VTQ242P9Z1E5Z8D8DWVS0P9TB2
+            cost: 7600
+            path: contracts/counter.clar
+            anchor-block-only: true
+            clarity-version: 4
+      epoch: "3.3"

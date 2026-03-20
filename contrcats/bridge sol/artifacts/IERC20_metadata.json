@@ -1,0 +1,100 @@
+{
+	"compiler": {
+		"version": "0.8.32+commit.ebbd65e5"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"notice": "Standard ERC-20 interface. Used to interact with the USDC token contract: transferFrom pulls tokens from the user into this contract on Deposit, transfer sends tokens out to the recipient on Transfer.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"bridge_sol.sol": "IERC20"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"bridge_sol.sol": {
+			"keccak256": "0x2215fe38d9febf4e23f179bcc3524092bc9df33dcf6968f4d552083560120a5e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b5ae7ce392d6845677c002d85a54b002779dd32dac7ed61d00a2bcd695d42013",
+				"dweb:/ipfs/Qmf4k2ZMarve7YySytsGro3hVqUcJqiezuKbNmHdv1LFun"
+			]
+		}
+	},
+	"version": 1
+}

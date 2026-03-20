@@ -7,7 +7,7 @@ import { fetchStacksUSDCBalance } from "@/lib/stacks-balance"
 import { useBridgeStore } from "@/hooks/use-bridge-store"
 
 const STACKS_NETWORK = process.env.NEXT_PUBLIC_STACKS_NETWORK || "testnet"
-const STACKS_BRIDGE_CONTRACT = process.env.NEXT_PUBLIC_STACKS_BRIDGE_CONTRACT 
+const STACKS_BRIDGE_CONTRACT = process.env.NEXT_PUBLIC_STACKS_BRIDGE_CONTRACT
 const SUSDCX_DECIMALS = 6
 
 function toMicroUnits(amount: string): number {
@@ -26,7 +26,7 @@ export function useStacksBridge() {
   const bridge = useCallback(
     async (amount: string, receiver: string, senderAddress: string) => {
       if (!senderAddress) { state.setError("Connect your Stacks wallet first"); return }
-      if (!STACKS_BRIDGE_CONTRACT) { state.setError("sUSDC contract address not configured"); return }
+      if (!STACKS_BRIDGE_CONTRACT) { state.setError("USDCx contract address not configured"); return }
 
       state.setError(null)
       state.setEvents([])
@@ -38,25 +38,31 @@ export function useStacksBridge() {
         const {
           uintCV,
           stringAsciiCV,
-          principalCV,
+          contractPrincipalCV,
           PostConditionMode,
+          Pc,
         } = await import("@stacks/transactions")
 
         const [contractAddress, contractName] = STACKS_BRIDGE_CONTRACT.split(".")
 
         state.setStatus("depositing")
 
+        const postConditions = [
+          Pc.principal("ST6BVG3ADY71WYYTZKFNYXCE5604JX3KG7N7R17X")
+            .willSendEq(microAmount)
+            .ft("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx", "usdcx-token")
+        ]
+
         await new Promise<void>((resolve, reject) => {
           openContractCall({
             network: STACKS_NETWORK === "mainnet" ? "mainnet" : "testnet",
             contractAddress,
             contractName,
-            functionName: "test-transfer",
+            functionName: "deposit",
             functionArgs: [
-              principalCV(senderAddress),
-              stringAsciiCV(receiver),
               uintCV(microAmount),
-              uintCV(0)
+              stringAsciiCV(receiver),
+              contractPrincipalCV("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", "usdcx"),
             ],
             postConditionMode: PostConditionMode.Deny,
             onFinish: async ({ txId }) => {

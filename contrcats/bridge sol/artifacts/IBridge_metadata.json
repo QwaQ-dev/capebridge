@@ -1,0 +1,65 @@
+{
+	"compiler": {
+		"version": "0.8.32+commit.ebbd65e5"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"notice": "Interface of Bridge_sol deployed on this chain. Transfer() sends USDC tokens to the recipient after 2-of-3 consensus is reached. Only this contract's address is authorized to call it, enforced by Bridge_sol.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"multisig_sol.sol": "IBridge"
+		},
+		"evmVersion": "osaka",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"multisig_sol.sol": {
+			"keccak256": "0x68a367f34d16fd3b4ad01e5709a694211fb95cfdc064fc3f5b73886362168beb",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b106056c191f5499f0da4de63eda0d2eee68cdc21bab074bd3e4e47b9c88ea34",
+				"dweb:/ipfs/QmYyTNQ4eYa68N7yTYsVhjvnZYND6A517mm5S6D6SrQs4g"
+			]
+		}
+	},
+	"version": 1
+}

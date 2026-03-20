@@ -25,7 +25,7 @@ database:
 
 stacks:
   rpc_url: "https://api.testnet.hiro.so"   # ENV: STACKS_RPC_URL
-  contract: "ST6BVG3ADY71WYYTZKFNYXCE5604JX3KG7N7R17X.capebridge-test-v1"  # ENV: STACKS_CONTRACT
+  contract: "ST6BVG3ADY71WYYTZKFNYXCE5604JX3KG7N7R17X.capebridge-test-v2"  # ENV: STACKS_CONTRACT
   signer_url: ""   # ENV: STACKS_SIGNER_URL
   bridge_token_trait: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx"
 
