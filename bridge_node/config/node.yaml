@@ -34,7 +34,7 @@ base:
   relayer_pk: ""   # ENV: BASE_RELAYER_PK
   contract: "0x7e3Bd761F1E1755274646e5CA48875fF44837533"  # ENV: BASE_CONTRACT
   chan_id: "11155111"
-  start_block: 10457270
+  start_block: 10485943
   federation_sync_address: "0x1a9B8ADB3BaC4038CCE91abE6E453B8CB8363b48"
 
 relayer:
