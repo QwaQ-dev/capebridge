@@ -10,16 +10,7 @@ import (
 
 // Fetching historical chunk
 func (i *BaseIndexer) syncHistorical() error {
-	fromBlock, err := i.db.GetLastBlock(i.ctx, i.cfg.Base.ChanID)
-	if err != nil {
-		return fmt.Errorf("change fromblock")
-	}
-
-	if fromBlock == 0 {
-		fromBlock = i.cfg.Base.StartBlock
-	}
-
-	i.log.Debug("From block", fromBlock)
+	fromBlock := i.cfg.Base.StartBlock
 
 	header, err := i.client.HeaderByNumber(i.ctx, nil)
 	if err != nil {
