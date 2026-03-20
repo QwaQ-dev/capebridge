@@ -1,23 +1,19 @@
 import { createConfig, http } from "wagmi"
-import { base, baseSepolia } from "wagmi/chains"
+import { baseSepolia } from "wagmi/chains"
 import { injected } from "wagmi/connectors"
 
 export const config = createConfig({
-  chains: [base, baseSepolia],
+  chains: [baseSepolia],
   connectors: [injected()],
   transports: {
-    [base.id]: http(),
-    [baseSepolia.id]: http(),
+    [baseSepolia.id]: http("https://sepolia.base.org"),
   },
   ssr: true,
 })
 
-// Contract addresses
-export const BRIDGE_CONTRACT = process.env.NEXT_PUBLIC_BRIDGE_CONTRACT 
-
+export const BRIDGE_CONTRACT = process.env.NEXT_PUBLIC_BRIDGE_CONTRACT
 export const USDC_CONTRACT = process.env.NEXT_PUBLIC_USDC_CONTRACT
-
-export const BACKEND_API =  process.env.NEXT_PUBLIC_BRIDGE_API
+export const BACKEND_API = process.env.NEXT_PUBLIC_BRIDGE_API
 
 export const USDC_ABI = [
   {

@@ -1,14 +1,11 @@
 import { createPublicClient, http, formatUnits } from "viem"
-import { base, baseSepolia } from "wagmi/chains"
+import { baseSepolia } from "wagmi/chains"
 import { USDC_CONTRACT, USDC_ABI } from "@/lib/wagmi"
 
-const CHAIN = baseSepolia
-
 const publicClient = createPublicClient({
-  chain: CHAIN,
-  transport: http(),
+  chain: baseSepolia,
+  transport: http("https://sepolia.base.org"),
 })
-
 export async function fetchEvmUSDCBalance(address: string): Promise<string> {
   if (!address || !USDC_CONTRACT) return "0.00"
 
