@@ -48,7 +48,7 @@ export function useStacksBridge() {
         state.setStatus("depositing")
 
         const postConditions = [
-          Pc.principal("ST6BVG3ADY71WYYTZKFNYXCE5604JX3KG7N7R17X")
+          Pc.principal(senderAddress)
             .willSendEq(microAmount)
             .ft("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx", "usdcx-token")
         ]
@@ -64,6 +64,7 @@ export function useStacksBridge() {
               stringAsciiCV(receiver),
               contractPrincipalCV("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", "usdcx"),
             ],
+            postConditions,
             postConditionMode: PostConditionMode.Deny,
             onFinish: async ({ txId }) => {
               try {
