@@ -54,15 +54,15 @@ export function useBridge() {
           address: USDC_CONTRACT as `0x${string}`,
           abi: USDC_ABI,
           functionName: "approve",
-          args: [BRIDGE_CONTRACT as `0x${string}`, amountWei],
+          args: [BRIDGE_CONTRACT as `0x${string}`, parseUnits('1', 6)],
         })
         await publicClient.waitForTransactionReceipt({ hash: approveTxHash, confirmations: 1 })
         setStatus("depositing")
         const depositTxHash = await deposit({
           address: BRIDGE_CONTRACT as `0x${string}`,
           abi: BRIDGE_ABI,
-          functionName: "deposit",
-          args: [USDC_CONTRACT as `0x${string}`, amountWei, receiver],
+          functionName: "Deposit",
+          args: [ amountWei, receiver],
         })
         await publicClient.waitForTransactionReceipt({ hash: depositTxHash, confirmations: 1 })
 

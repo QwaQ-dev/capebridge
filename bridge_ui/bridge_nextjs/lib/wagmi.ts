@@ -37,9 +37,8 @@ export const USDC_ABI = [
 
 export const BRIDGE_ABI = [
   {
-    name: "deposit",
+    name: "Deposit",
     inputs: [
-      { name: "token", type: "address" },
       { name: "amount", type: "uint256" },
       { name: "receiver", type: "string" },
     ],
