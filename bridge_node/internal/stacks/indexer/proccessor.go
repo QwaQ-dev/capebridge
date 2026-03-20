@@ -54,7 +54,7 @@ func processIfNewEvent(i *StacksIndexer, raw api.HiroEvent) (int64, error) {
 
 	err = i.db.SaveBridgeEvent(
 		i.ctx,
-		"base", "stacks", raw.TxID, raw.EventIndex,
+		"stacks", "base", raw.TxID, raw.EventIndex,
 		txInfo.BlockHeight, "", txInfo.SenderAddress,
 		parsed.Receiver, parsed.Amount, parsed.Nonce, "detected",
 	)
