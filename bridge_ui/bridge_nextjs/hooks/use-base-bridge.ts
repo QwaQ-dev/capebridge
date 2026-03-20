@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useState, useEffect } from "react"
-import { useAccount, useWriteContract, useReadContract, useChainId } from "wagmi"
+import { useAccount, useWriteContract, useReadContract, useChainId, usePublicClient } from "wagmi"
 import { parseUnits } from "viem"
 import { BRIDGE_CONTRACT, USDC_CONTRACT, USDC_ABI, BRIDGE_ABI, BACKEND_API } from "@/lib/wagmi"
 import { subscribeToBridgeEvents } from "@/lib/bridge-sse"
@@ -10,7 +10,12 @@ import { useBridgeStore } from "@/hooks/use-bridge-store"
 export function useBridge() {
   const { address } = useAccount()
   const chainId = useChainId()
-  const state = useBridgeStore() 
+  const publicClient = usePublicClient()
+
+  const setStatus = useBridgeStore((s) => s.setStatus)
+  const setError = useBridgeStore((s) => s.setError)
+  const setEvents = useBridgeStore((s) => s.setEvents)
+  const setCurrentTxHash = useBridgeStore((s) => s.setCurrentTxHash)
 
   const [balance, setBalance] = useState("0.00")
   const [balanceWei, setBalanceWei] = useState(BigInt(0))
@@ -20,14 +25,6 @@ export function useBridge() {
     abi: USDC_ABI,
     functionName: "balanceOf",
     args: address ? [address] : undefined,
-    query: { enabled: !!address, refetchInterval: 10_000 },
-  })
-
-  const { data: allowanceRaw, refetch: refetchAllowance } = useReadContract({
-    address: USDC_CONTRACT as `0x${string}`,
-    abi: USDC_ABI,
-    functionName: "allowance",
-    args: address ? [address, BRIDGE_CONTRACT as `0x${string}`] : undefined,
     query: { enabled: !!address, refetchInterval: 10_000 },
   })
 
@@ -43,50 +40,40 @@ export function useBridge() {
 
   const bridge = useCallback(
     async (amount: string, receiver: string) => {
-      if (!address) return
+      if (!address || !publicClient) return
 
-      state.setError(null)
-      state.setEvents([])
-
+      setError(null)
+      setEvents([])
       const amountWei = parseUnits(amount, 6)
 
       try {
-        const currentAllowance = (allowanceRaw as bigint | undefined) ?? BigInt(0)
-        if (currentAllowance < amountWei) {
-          state.setStatus("approving")
-          await approve({
-            address: USDC_CONTRACT as `0x${string}`,
-            abi: USDC_ABI,
-            functionName: "approve",
-            args: [BRIDGE_CONTRACT as `0x${string}`, amountWei],
-          })
 
-          await new Promise<void>((resolve) => {
-            const check = setInterval(async () => {
-              const result = await refetchAllowance()
-              if (result.data && (result.data as bigint) >= amountWei) {
-                clearInterval(check)
-                resolve()
-              }
-            }, 2000)
-          })
-        }
-
-        state.setStatus("depositing")
-        const depositTx = await deposit({
+        console.log(amountWei)
+        setStatus("approving")
+        const approveTxHash = await approve({
+          address: USDC_CONTRACT as `0x${string}`,
+          abi: USDC_ABI,
+          functionName: "approve",
+          args: [BRIDGE_CONTRACT as `0x${string}`, amountWei],
+        })
+        await publicClient.waitForTransactionReceipt({ hash: approveTxHash, confirmations: 1 })
+        // 2. Депозит — только после подтверждения апрува
+        setStatus("depositing")
+        const depositTxHash = await deposit({
           address: BRIDGE_CONTRACT as `0x${string}`,
           abi: BRIDGE_ABI,
           functionName: "deposit",
           args: [USDC_CONTRACT as `0x${string}`, amountWei, receiver],
         })
+        await publicClient.waitForTransactionReceipt({ hash: depositTxHash, confirmations: 1 })
 
-        state.setCurrentTxHash(depositTx)
+        setCurrentTxHash(depositTxHash)
 
         await fetch(`${BACKEND_API}/bridge/deposit`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            tx_hash: depositTx,
+            tx_hash: depositTxHash,
             sender: address,
             receiver,
             amount: amountWei.toString(),
@@ -95,14 +82,14 @@ export function useBridge() {
           }),
         })
 
-        subscribeToBridgeEvents(depositTx, state.setStatus, state.setEvents, state.setError)
+        subscribeToBridgeEvents(depositTxHash, setStatus, setEvents, setError)
         refetchBalance()
       } catch (err) {
-        state.setStatus("failed")
-        state.setError(err instanceof Error ? err.message : "Transaction failed")
+        setStatus("failed")
+        setError(err instanceof Error ? err.message : "Transaction failed")
       }
     },
-    [address, allowanceRaw, approve, deposit, refetchBalance, chainId, state]
+    [address, publicClient, approve, deposit, refetchBalance, chainId, setStatus, setError, setEvents, setCurrentTxHash]
   )
 
   return { balance, balanceWei, bridge }

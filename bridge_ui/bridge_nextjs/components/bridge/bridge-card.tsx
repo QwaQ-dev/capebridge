@@ -91,6 +91,7 @@ export function BridgeCard() {
     }
 
     if (isBaseToStacks) {
+      console.log("EVM STARTING")
       evmBridge.bridge(amount, recipientAddress)
     } else {
       const senderAddress = stacks.address ?? ""

@@ -6,12 +6,12 @@ export const config = createConfig({
   chains: [baseSepolia],
   connectors: [injected()],
   transports: {
-    [baseSepolia.id]: http("https://sepolia.base.org"),
+    [baseSepolia.id]: http(),
   },
   ssr: true,
 })
 
-export const BRIDGE_CONTRACT = process.env.NEXT_PUBLIC_BRIDGE_CONTRACT
+export const BRIDGE_CONTRACT = process.env.NEXT_PUBLIC_BASE_BRIDGE_CONTRACT
 export const USDC_CONTRACT = process.env.NEXT_PUBLIC_USDC_CONTRACT
 export const BACKEND_API = process.env.NEXT_PUBLIC_BRIDGE_API
 
@@ -29,16 +29,6 @@ export const USDC_ABI = [
   {
     name: "balanceOf",
     inputs: [{ name: "account", type: "address" }],
-    outputs: [{ name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    name: "allowance",
-    inputs: [
-      { name: "owner", type: "address" },
-      { name: "spender", type: "address" },
-    ],
     outputs: [{ name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",

@@ -129,7 +129,7 @@ export default function BridgePage() {
 
           <div className="flex items-center gap-2">
             <Link
-              href="https://github.com/cape4labs"
+              href="https://github.com/QwaQ-dev/capebridge"
               target="_blank"
               className="flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted"
             >
@@ -137,7 +137,7 @@ export default function BridgePage() {
               <span className="hidden sm:inline">GitHub</span>
             </Link>
             <Link
-              href="https://youtube.com"
+              href="https://youtu.be/VK5M9tOktmE"
               target="_blank"
               className="flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted"
             >
@@ -157,6 +157,9 @@ export default function BridgePage() {
           <div className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm">
             <span className="text-muted-foreground">Max amount</span>
             <span className="font-medium">1 USDC</span>
+          </div>
+          <div className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm">
+            <span className="font-medium">ONLY FOR TEST</span>
           </div>
         </div>
       </main>
