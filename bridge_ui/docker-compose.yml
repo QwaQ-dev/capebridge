@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: bridge-api-sse
     environment:
-      - DATABASE_URL=postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@postgres-1:5432/${DATABASE_NAME}?sslmode=enabled
+      - DATABASE_URL=postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@postgres-1:5432/${DATABASE_NAME}?sslmode=disable
       - PORT=8080
     ports:
       - "8080:8080"
