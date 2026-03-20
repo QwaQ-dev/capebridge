@@ -1,0 +1,1 @@
+export type Direction = "base-to-stacks" | "stacks-to-base"

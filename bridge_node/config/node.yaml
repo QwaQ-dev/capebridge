@@ -1,0 +1,43 @@
+# Any field left empty in this file will be automatically
+# overridden by environment variables (.env) if provided.
+#
+# Priority:
+# 1. Environment variables (highest priority)
+# 2. YAML values
+#
+# Example:
+#   database:
+#     host: ""   # will be taken from DATABASE_HOST
+#
+# Make sure corresponding ENV variables are defined.
+# =========================
+
+global:
+  env: prod
+
+database:
+  host:       # ENV: DATABASE_HOST
+  port:       # ENV: DATABASE_PORT
+  username:   # ENV: DATABASE_USER
+  password:   # ENV: DATABASE_PASSWORD
+  name:       # ENV: DATABASE_NAME
+  sslmode:    # ENV: DATABASE_SSLMODE (optional)
+
+stacks:
+  rpc_url: "https://api.testnet.hiro.so"   # ENV: STACKS_RPC_URL
+  confirms: 3
+  contract: "ST1PGPX7HRMFBBXFKG6YCNDCKN5TZJF32VMF443ZQ.hh3"  # ENV: STACKS_CONTRACT
+  signer_url: ""   # ENV: STACKS_SIGNER_URL
+  bridge_token_trait: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx"
+
+base:
+  rpc_url: "wss://ethereum-sepolia-rpc.publicnode.com"  # ENV: BASE_RPC_URL
+  confirms: 3
+  relayer_pk: ""   # ENV: BASE_RELAYER_PK
+  contract: "0x005A389800C435807377436BcdCf28A657e8B296"  # ENV: BASE_CONTRACT
+  chan_id: "11155111"
+  start_block: 10457270
+  federation_sync_address: "0xf7246C638eD2c7c611D4a4EF7221ebCa9978820b"
+
+relayer:
+  node_id: "default"   # ENV: NODE_ID

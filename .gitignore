@@ -1,0 +1,7 @@
+bridge_ui/backend/.env
+bridge_ui/bridge_nextjs/.env
+bridge_ui/bridge_nextjs/node_modules
+bridge_ui/bridge_nextjs/.next
+bridge_ui/.env
+bridge_node/.env
+bridge_node/internal/stacks/signer/node_modules/

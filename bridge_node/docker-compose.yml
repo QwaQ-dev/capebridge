@@ -1,0 +1,151 @@
+services:
+  postgres-1:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD_1}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - pgdata-1:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bridge-shared-net
+
+  postgres-2:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD_2}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - pgdata-2:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bridge-shared-net
+
+  postgres-3:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD_3}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - pgdata-3:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bridge-shared-net
+
+  signer-1:
+    build: ./internal/stacks/signer
+    environment:
+      STACKS_PRIVATE_KEY: ${STACKS_PRIVATE_KEY_1}
+      STACKS_NETWORK: testnet
+    networks:
+      - bridge-shared-net
+
+  signer-2:
+    build: ./internal/stacks/signer
+    environment:
+      STACKS_PRIVATE_KEY: ${STACKS_PRIVATE_KEY_2}
+      STACKS_NETWORK: testnet
+    networks:
+      - bridge-shared-net
+
+  signer-3:
+    build: ./internal/stacks/signer
+    environment:
+      STACKS_PRIVATE_KEY: ${STACKS_PRIVATE_KEY_3}
+      STACKS_NETWORK: testnet
+    networks:
+      - bridge-shared-net
+
+  node-1:
+    build: .
+    environment:
+      CONFIG_PATH: /app/config/node.yaml
+      NODE_ID: node-1
+      BASE_RELAYER_PK: ${BASE_RELAYER_PK_1}
+      BASE_RPC_URL: ${BASE_RPC_URL}
+      STACKS_SIGNER_URL: "http://signer-1:3000"
+      FEDERATION_SYNC_ADDRESS: ${FEDERATION_SYNC_ADDRESS}
+      DATABASE_HOST: postgres-1
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD_1}
+      DATABASE_NAME: ${DATABASE_NAME}
+    volumes:
+      - ./config/node.yaml:/app/config/node.yaml:ro
+    depends_on:
+      postgres-1:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - bridge-shared-net
+
+  node-2:
+    build: .
+    environment:
+      CONFIG_PATH: /app/config/node.yaml
+      NODE_ID: node-2
+      BASE_RELAYER_PK: ${BASE_RELAYER_PK_2}
+      BASE_RPC_URL: ${BASE_RPC_URL}
+      STACKS_SIGNER_URL: "http://signer-2:3000"
+      FEDERATION_SYNC_ADDRESS: ${FEDERATION_SYNC_ADDRESS}
+      DATABASE_HOST: postgres-2
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD_2}
+      DATABASE_NAME: ${DATABASE_NAME}
+    volumes:
+      - ./config/node.yaml:/app/config/node.yaml:ro
+    depends_on:
+      postgres-2:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - bridge-shared-net
+
+  node-3:
+    build: .
+    environment:
+      CONFIG_PATH: /app/config/node.yaml
+      NODE_ID: node-3
+      BASE_RELAYER_PK: ${BASE_RELAYER_PK_3}
+      BASE_RPC_URL: ${BASE_RPC_URL}
+      STACKS_SIGNER_URL: "http://signer-3:3000"
+      FEDERATION_SYNC_ADDRESS: ${FEDERATION_SYNC_ADDRESS}
+      DATABASE_HOST: postgres-3
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD_3}
+      DATABASE_NAME: ${DATABASE_NAME}
+    volumes:
+      - ./config/node.yaml:/app/config/node.yaml:ro
+    depends_on:
+      postgres-3:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - bridge-shared-net
+
+networks:
+  bridge-shared-net:
+    external: true
+    name: bridge-network
+
+volumes:
+  pgdata-1:
+  pgdata-2:
+  pgdata-3:
