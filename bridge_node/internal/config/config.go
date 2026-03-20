@@ -78,6 +78,7 @@ func LoadConfig(path string) (*Config, error) {
 	cfg.Database.Username = envOverride(cfg.Database.Username, "DATABASE_USER")
 	cfg.Database.Password = envOverride(cfg.Database.Password, "DATABASE_PASSWORD")
 	cfg.Database.Name = envOverride(cfg.Database.Name, "DATABASE_NAME")
+	cfg.Database.SSLMode = envOverride(cfg.Database.SSLMode, "DATABASE_SSLMODE")
 
 	// Stacks
 	cfg.Stacks.RPCURL = envOverride(cfg.Stacks.RPCURL, "STACKS_RPC_URL")
