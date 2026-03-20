@@ -11,7 +11,7 @@ export function subscribeToBridgeEvents(
   setEvents: EventsSetter,
   setError: ErrorSetter
 ): () => void {
-  const eventSource = new EventSource(`${BACKEND_API}/api/bridge/events/${txHash}`)
+  const eventSource = new EventSource(`${BACKEND_API}/bridge/events/${txHash}`)
 
   eventSource.onmessage = (event) => {
   console.log("SSE EVENT:", event.data)

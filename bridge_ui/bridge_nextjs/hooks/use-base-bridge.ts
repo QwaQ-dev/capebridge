@@ -82,7 +82,7 @@ export function useBridge() {
 
         state.setCurrentTxHash(depositTx)
 
-        await fetch(`${BACKEND_API}/api/bridge/deposit`, {
+        await fetch(`${BACKEND_API}/bridge/deposit`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

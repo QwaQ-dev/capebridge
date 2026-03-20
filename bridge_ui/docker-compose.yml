@@ -26,7 +26,7 @@ services:
         - NEXT_PUBLIC_STACKS_BRIDGE_CONTRACT=${STACKS_BRIDGE_CONTRACT}
     container_name: bridge-nextjs-ui
     environment:
-      - NEXT_PUBLIC_BRIDGE_API=http://localhost:8080
+        - NEXT_PUBLIC_BRIDGE_API=https://capebridge.tech/api 
     ports:
       - "3000:3000"
     networks:
