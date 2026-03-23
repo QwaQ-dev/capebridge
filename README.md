@@ -26,9 +26,9 @@ The **testnet** version is **already deployed** - you can try it here: capebridg
 
 Below you can find how the bridge works in both directions step-by-step:
 
-<img width="1855" height="641" alt="image" src="https://github.com/user-attachments/assets/0e17db71-e4a6-4d1d-a86a-2deccd06920a" />
+<img width="1855" height="562" alt="image_2026-03-20_20-52-55" src="https://github.com/user-attachments/assets/138d6e71-d5b7-4953-9ef4-7f5370ebd34f" />
 
-<img width="1852" height="656" alt="image" src="https://github.com/user-attachments/assets/07a3b46f-15bf-4876-a773-9cce613b5d05" />
+<img width="1852" height="566" alt="image_2026-03-20_20-52-55 (2)" src="https://github.com/user-attachments/assets/59a03d19-fa09-4e06-a0d8-2d15beacb52c" />
 
 **Thus, our project consists of:**
 
